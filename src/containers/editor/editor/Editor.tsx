@@ -87,7 +87,7 @@ export function useRevealNode() {
   }, [editor, revealPosition, isNeedReveal]);
 }
 
-const exampleData = ``;
+const exampleData = "";
 
 function useDisplayExample() {
   const editor = useEditor("main");
