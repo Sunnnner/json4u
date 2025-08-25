@@ -1,6 +1,5 @@
 import "@/app/globals.css";
 import { Toaster } from "@/components/ui/sonner";
-import { env } from "@/lib/env";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
@@ -11,15 +10,6 @@ export async function generateMetadata() {
   const t = await getTranslations({ locale, namespace: "Metadata" });
 
   return {
-    metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
-    alternates: {
-      canonical: "/",
-      languages: {
-        en: "https://json4u.com",
-        zh: "https://json4u.cn",
-        "x-default": "https://json4u.com",
-      },
-    },
     applicationName: t("name"),
     title: {
       default: t("title"),
@@ -34,21 +24,6 @@ export async function generateMetadata() {
     },
     formatDetection: {
       telephone: false,
-    },
-    openGraph: {
-      type: "website",
-      siteName: t("name"),
-      title: t("title"),
-      description: t("description"),
-      authors: ["loggerhead"],
-      images: [{ url: `${env.NEXT_PUBLIC_APP_URL}/apple-icon.png`, width: 512, height: 512, alt: t("name") }],
-    },
-    twitter: {
-      card: "summary",
-      title: t("title"),
-      description: t("description"),
-      creator: "@1oggerhead",
-      images: [`${env.NEXT_PUBLIC_APP_URL}/apple-icon.png`],
     },
   };
 }

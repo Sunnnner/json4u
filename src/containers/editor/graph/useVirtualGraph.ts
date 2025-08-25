@@ -4,12 +4,12 @@ import { config, initialViewport } from "@/lib/graph/layout";
 import type { EdgeWithData, NodeWithData } from "@/lib/graph/types";
 import { useStatusStore } from "@/stores/statusStore";
 import { useTreeVersion } from "@/stores/treeStore";
-import { useUserStore } from "@/stores/userStore";
 import { useEdgesState, useNodesState, useReactFlow } from "@xyflow/react";
 import { XYPosition } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { maxBy } from "lodash-es";
 import { useShallow } from "zustand/shallow";
+import { sendGAEvent } from "@next/third-parties/google";
 
 const viewportSize: [number, number] = [0, 0];
 
@@ -25,29 +25,16 @@ export default function useVirtualGraph() {
   ]);
 
   const { setViewport, getZoom } = useReactFlow();
-  const { count, usable } = useUserStore(
-    useShallow((state) => ({
-      count: state.count,
-      usable: state.usable("graphModeView"),
-    })),
-  );
-  const { isGraphView, resetFoldStatus, setShowPricingOverlay } = useStatusStore(
+  const { isGraphView, resetFoldStatus } = useStatusStore(
     useShallow((state) => ({
       isGraphView: state.viewMode === ViewMode.Graph,
       resetFoldStatus: state.resetFoldStatus,
-      setShowPricingOverlay: state.setShowPricingOverlay,
     })),
   );
 
   useEffect(() => {
     if (!(window.worker && isGraphView)) {
       console.l("skip graph render:", isGraphView, treeVersion);
-      return;
-    }
-
-    if (!usable) {
-      console.l("skip graph render because reach out of free quota.");
-      setShowPricingOverlay(true);
       return;
     }
 
@@ -83,9 +70,9 @@ export default function useVirtualGraph() {
         nodes.slice(0, 10),
         edges.slice(0, 10),
       );
-      nodes.length > 0 && count("graphModeView");
+      nodes.length > 0 && sendGAEvent("event", "cmd_statistics", { name: "graphModeView" });
     })();
-  }, [usable, isGraphView, treeVersion]);
+  }, [isGraphView, treeVersion]);
 
   return {
     nodes,

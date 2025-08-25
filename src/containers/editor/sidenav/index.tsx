@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Logo from "@/components/icons/Logo";
 import { Separator } from "@/components/ui/separator";
-import { isCN, version } from "@/lib/env";
+import { version } from "@/lib/env";
 import { cn } from "@/lib/utils";
 import { useConfigFromCookies } from "@/stores/hook";
 import { useStatusStore } from "@/stores/statusStore";
@@ -16,15 +16,12 @@ import {
   CircleHelp,
   Share2,
   SquareStack,
-  BarChartBig,
   AlignHorizontalJustifyCenter,
   ArrowLeftToLine,
   ArrowRightFromLine,
-  Bug,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useShallow } from "zustand/shallow";
-import AccountButton from "./AccountButton";
 import Button from "./Button";
 import ExportPopover from "./ExportPopover";
 import { Label } from "./IconLabel";
@@ -32,7 +29,6 @@ import ImportPopover from "./ImportPopover";
 import LinkButton from "./LinkButton";
 import PopoverBtn, { popoverBtnClass } from "./PopoverButton";
 import SharePopover from "./SharePopover";
-import StatisticsPopover from "./StatisticsPopover";
 import Toggle from "./Toggle";
 
 export default function SideNav() {
@@ -135,15 +131,6 @@ export default function SideNav() {
         </ul>
         <ul className="flex flex-col px-1 gap-y-2">
           <LinkButton icon={<CircleHelp className="icon" />} title={t("Tutorial")} href={"/tutorial"} newWindow />
-          <LinkButton
-            icon={<Bug className="icon" />}
-            title={t("Feedback")}
-            href={isCN ? "https://support.qq.com/product/670462" : "https://github.com/loggerhead/json4u/issues/new"}
-            newWindow
-          />
-          <PopoverBtn title={t("statistics")} icon={<BarChartBig className="icon" />} content={<StatisticsPopover />} />
-          {/* can't connect to supabase in China, so disable the function temporarily */}
-          {!isCN && <AccountButton avatarClassName="w-6 h-6" />}
           <Button
             className="my-1.5"
             icon={fixSideNav ? <ArrowRightFromLine className="icon" /> : <ArrowLeftToLine className="icon" />}

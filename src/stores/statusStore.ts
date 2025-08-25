@@ -25,7 +25,6 @@ export interface StatusState extends Config {
   rightPanelCollapsed: boolean;
   leftPanelCollapsed: boolean;
   sideNavExpanded?: boolean;
-  showPricingOverlay?: boolean;
   unfoldNodeMap: Record<string, boolean>;
   unfoldSiblingsNodeMap: Record<string, boolean>;
 
@@ -45,7 +44,6 @@ export interface StatusState extends Config {
   setEnableSyncScroll: (enable: boolean) => void;
   setSideNavExpanded: (expanded: boolean) => void;
   setFixSideNav: (fix: boolean) => void;
-  setShowPricingOverlay: (show: boolean) => void;
   setIsTouchpad: (isTouchpad: boolean) => void;
   toggleFoldNode: (nodeId: string) => void;
   toggleFoldSibingsNode: (nodeId: string) => void;
@@ -158,10 +156,6 @@ export const useStatusStore = create<StatusState>()(
 
       setFixSideNav(fix: boolean) {
         set({ fixSideNav: fix });
-      },
-
-      setShowPricingOverlay(show: boolean) {
-        set({ showPricingOverlay: show });
       },
 
       setIsTouchpad(isTouchpad: boolean) {

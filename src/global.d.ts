@@ -1,6 +1,5 @@
 import type { MonacoApi } from "@/lib/editor/types.d.ts";
 import type { MyWorker } from "@/lib/worker/worker";
-import "@hcaptcha/types";
 import type { Remote } from "comlink";
 import en from "../messages/en.json";
 
